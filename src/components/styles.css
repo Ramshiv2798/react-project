@@ -1,0 +1,49 @@
+.card {
+  box-shadow: 0px 0px 2px 2px black;
+  padding: 10px;
+  text-align: center;
+}
+
+.card > p {
+  font-weight: 300;
+  color: grey;
+}
+
+.doctorparent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 20px;
+}
+
+.doctorparent > div {
+  flex-basis: 30%;
+}
+
+.form-container {
+  width: 70%;
+  margin: 20px auto; 
+}
+
+form {
+  border: 2px solid black;
+  padding: 5%;
+}
+
+input,
+select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+}
+
+form button {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}

@@ -1,48 +1,51 @@
-//import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Section from "./components/Section";
-import "./components/styles.css";
-import Doctorcard from "./components/Doctorcard";
-import Addnewdoctor from "./components/Addnewdoctor";
-
+import Navbar from './components/Navbar'
+import './components/styles.css'
+import Section from './components/Section'
+import Addnewdoctor from './components/Addnewdoctor'
+import { Route, Routes } from 'react-router-dom'
+import Doctordetails from './components/Doctordetails'
+// import {useEffect} from 'react'
+// import { useState } from 'react'
 function App() {
-  // const [count, setCount] = useState(0);
-//  const [data, setData] = useState("");
-
-  //useEffect(() => {
-    //console.log("API calling or data changed:", data);
-  //}, [data]);
-
+  // let [count,setCount]=useState(0)
+  // let [data,newData]=useState('')
+  // useEffect(()=>{
+  //   console.log('api calling')
+  // },[data])
   return (
     <div>
-      {/* <p>Data: {data}</p> */}
-      {/* <button
-        onClick={() => {
-          let a = prompt("Enter a name");
-          setData(a);
-        }}
+      {/* {data}
+      <button onClick={()=>{
+        let a=prompt('enter a name')
+        newData(a)}}>newdata</button>
+      count is {count}
+      <button onClick={
+        ()=>{
+          setCount(count+1)
+      }}>add</button>
+import Doctordetails from './components/Doctordetails'
       
-        New Data
-      </button>> */}
+      */}
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Section/>}/>
+        <Route path='/addnewdoctor' element={<Addnewdoctor/>}/>
+        <Route path='/doctordetails/:id' element={<Doctordetails/>}/>
+      </Routes>
+      {/* <Section/> */}
+     
+     {/* <div className='doctorcontainer'>
+      <Doctorcard imglink='' name='jessy' gender='female' specialization='heart specialist'/>
+      <Doctorcard name='ram' gender='male' specialization='Bones specialist'/>
+      <Doctorcard name='siva' gender='male' specialization='Neuro specialist'/>
+      <Doctorcard name='Madhu' gender='male' specialization='Ortho specialist'/>
+      <Doctorcard name='Vasavi' gender='female' specialization='Psycho specialist'/>
+  
+     </div> */}
 
-      {/* <p>Count is {count}</p>
-      <button onClick={() => setCount(count + 1)}>Add</button> */}
-
-      <Navbar />
-      <Section />
-
-      <div className="doctorparent">
-        <Doctorcard name="Sivaram" specialization="Bones" gender="male" />
-        <Doctorcard name="Teja" specialization="Muscles" gender="male" />
-        <Doctorcard name="Vasavi" specialization="Psycho" gender="female" />
-        <Doctorcard name="Madhu" specialization="Orthocare" gender="male" />
-        <Doctorcard name="Aditya" specialization="Skin Specialist" gender="male" />
-        <Doctorcard name="Deva" specialization="Lungs" gender="male" />
-      </div>
-
-      <Addnewdoctor />
+     {/* <Addnewdoctor/> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

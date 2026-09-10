@@ -7,13 +7,13 @@ function Doctordetails() {
     let [doctor,setDoctor]=useState()
    
     async function getapidata(){
-        let response=await axios.get(`https://doctorapibackend.onrender.com/doctors`)
-    
-
-  
+      try{
+    let response=await axios.get(`https://doctorapibackend.onrender.com/doctors`)
     let finaldata=response.data.find((val)=>id==val.id)
-  
     setDoctor(finaldata)
+    } catch(err){
+      console.log(err)
+    }
     }
     useEffect(()=>{
      getapidata()

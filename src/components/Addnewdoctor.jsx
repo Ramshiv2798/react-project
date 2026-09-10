@@ -11,20 +11,29 @@ function Addnewdoctor() {
     let [salary, setSalary] = useState('');
     let [newdoctor, setNewdoctor] = useState(null);
     async function handleSubmit(e) {
+      try{
         e.preventDefault();
         let formdetails = {id:Date.now(), name, age, gender, specialization, salary};
         await axios.post('https://doctorapibackend.onrender.com/doctors',formdetails)
         alert('data posted')
         setNewdoctor(formdetails);
-    } 
-
-    async function deletedata(id){
-      await axios.delete(`https://doctorapibackend.onrender.com/doctors/${id}`)
-      alert('deleted')
-      setNewdoctor(id)
+      } catch(err){
+        console.log(err)
+      }
     }
+     async function deletedata(id){
+      try{
+        await axios.delete(`https://doctorapibackend.onrender.com/doctors/${id}`)
+        alert('deleted')
+        setNewdoctor(id)
+      } catch(err){
+        console.log(err)
+      }
+    }
+  
 
     async function updatedata(id){
+      try{
       let updated={
          name: 'john', 
          age: 25,
@@ -35,7 +44,10 @@ function Addnewdoctor() {
       await axios.put(`https://doctorapibackend.onrender.com/doctors/${id}`,updated)
       alert('updated')
       setNewdoctor(updated)
+    } catch(err){
+      console.log(err)
     }
+  }
   return (
     <div className="form-container">
       <h1>Add New Doctor</h1>

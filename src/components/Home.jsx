@@ -1,83 +1,105 @@
+import React from 'react'
+import {useEffect,useState,useMemo} from 'react'
+import Doctorcard from './Doctorcard';
 import axios from 'axios'
-import { useState, useEffect } from "react";
-import Doctorcard from "./Doctorcard";
+function Home({newdoctor,deletedata,updatedata}) {
+  let [doctors,setDoctors]=useState([])
+  let [search,setSearch]=useState('')
+  let [specialization,setSpecialization]=useState('')
 
+  // function getapidata(){
+  //   let data = [
+  //     {
+  //       id: 1,
+  //       name: "Teja",
+  //       age: 26,
+  //       gender: "Male",
+  //       specialization: "Muscles",
+  //       salary: 7000000,
+  //     },
 
-function Home({ newdoctor,deletedata,updatedata}) {
-  const [doctors, setDoctors] = useState([]);
-  const [search, setSearch] = useState("");
-  const [specialization, setSpecialization] = useState("");
+  //     {
+  //       id: 2,
+  //       name: "Sam",
+  //       age: 26,
+  //       gender: "Male",
+  //       specialization: "Bones",
+  //       salary: 4000000,
+  //     },
+
+  //     {
+  //       id: 3,
+  //       name: "Anu",
+  //       age: 25,
+  //       gender: "Female",
+  //       specialization: "Heart",
+  //       salary: 5000000,
+  //     },
+      
+  //   ];
+  // setDoctors(data)
+  // }
+  useEffect(()=>{
+    getapidata()
+  },[newdoctor])
+
+  // useEffect(()=>{
+  //   if(newdoctor){
+  //     setDoctors(prev=>[...prev,newdoctor])
+  //   }
+  // },[newdoctor])
+
+  let filtereddoctors=useMemo(()=>{
+      return doctors.filter((val)=>{
+    return((val.name.toLowerCase().includes(search.toLowerCase()) && 
+    (specialization=="" || val.specialization==specialization)))
+  })
+},[search,specialization,doctors])
+
+  // let filtereddoctors=doctors.filter((val)=>{
+  //   return(val.name.toLowerCase().includes(search.toLowerCase()) && 
+  //   (specialization=="" || val.specialization==specialization)
+  // )
+  //   // return(search.toLowerCase().includes(val.name.toLowerCase()))
+  // })
 
   async function getapidata(){
- let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
- console.log(response)//response- {}
- console.log(response.data) //actual data
- setDoctors(response.data)
+    try{
+    let response=await axios.get("https://doctorapibackend.onrender.com/doctors")
+    console.log(response)
+    console.log(response.data)//actual data
+    setDoctors(response.data)
+} catch(err){
+    console.log(err);
 
-
-    
-    //setDoctors(data);
+}
   }
-
-  useEffect(() => {
-    getapidata();
-  }, [newdoctor]);
-
-  // useEffect(() => {
-    // if (newdoctor) {
-      // setDoctors((prev) => [...prev, newdoctor]);
-    // }
-      //}, [newdoctor]);
-
-  const filteredDoctors = doctors.filter((doc) => {
-  const matchesName = doc.name.toLowerCase().includes(search.toLowerCase());
-    const matchesSpecialization =
-      specialization === "" || doc.specialization === specialization;
-    return matchesName && matchesSpecialization;
-  });
-
+  useEffect(()=>{
+      getapidata()
+  },[])
   return (
     <div>
-      <div className="filters">
-        <input
-          type="text"
-          className="text-field"
-          value={search}
-          placeholder="Search Doctor"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select
-          className="text-field"
-          value={specialization}
-          onChange={(e) => setSpecialization(e.target.value)}
-        >
-          <option value="">Select Specialization</option>
-          <option value="Muscles">Muscles</option>
-          <option value="Bones">Bones</option>
-          <option value="Heart">Heart</option>
-        </select>
-      </div>
-
-      {filteredDoctors.length > 0 ? (
-        <div className="doctorcontainer">
-          {filteredDoctors.map((doctor) => (
-            <Doctorcard
-              deletedata={deletedata}
-              updatedata={updatedata}
-              key={doctor.id}
-              id={doctor.id}
-              name={doctor.name}
-              gender={doctor.gender}
-              specialization={doctor.specialization}
-            />
-          ))}
-        </div>
-      ) : (
-        <h1>No Doctors Found</h1>
-      )}
+      <input value={search} onChange={(e)=>setSearch(e.target.value)} type="text" placeholder='Search doctor' />
+      <select value={specialization} onChange={(e)=>setSpecialization(e.target.value)} name="" id="">
+        <option value="Bones">Bones</option>
+        <option value="Muscles">Muscles</option>
+        <option value="Heart">Heart</option>
+      </select>
+      {doctors.length>0?(
+        <div className='doctorcontainer'>
+          {filtereddoctors.map((doctor)=>{
+            return <Doctorcard 
+            deletedata={deletedata}
+            updatedata={updatedata}
+            name={doctor.name}
+            gender={doctor.gender}
+            specialization={doctor.specialization}
+            key={doctor.id}
+             id={doctor.id}/>
+          })}
+        </div>):(<h1>loading</h1>)}
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
